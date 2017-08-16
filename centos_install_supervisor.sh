@@ -4,10 +4,11 @@
 #  supervisord --pidfile /var/run/supervisord.pid -c /etc/supervisord.conf
 ###
 
-SV_CONFIG = "/etc/supervisord.conf"
-SV_CONF_DIR = "/etc/supervisord"
+SV_CONFIG="/etc/supervisord.conf"
+SV_CONF_DIR="/etc/supervisord"
 
 # 安装 supervisor
+yum install -y python-setuptools python-setuptools-devel
 easy_install pip
 pip install supervisor
 
