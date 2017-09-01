@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+    javamelody:
+        build:
+            context: .
+            dockerfile: javamelody/Dockerfile
+        ports:
+            - 8081:8081
+            - 8089:8089
