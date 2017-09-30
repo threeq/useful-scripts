@@ -1,0 +1,1 @@
+./consul-template -template "apps.tpl:apps.conf" -consul-addr http://h5.zhihuirank.com -once
