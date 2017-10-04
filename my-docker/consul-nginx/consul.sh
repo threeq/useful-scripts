@@ -3,6 +3,7 @@
     --restart=always \
     --volume=/var/run/docker.sock:/tmp/docker.sock \
     gliderlabs/registrator:latest \
+      -ip="172.19.133.38" \
       consul://172.19.133.38:8500
 
 docker run -d \
