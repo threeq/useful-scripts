@@ -1,0 +1,14 @@
+
+xpack.monitoring.enabled: true
+xpack.notification.slack:
+  default_account: monitoring
+  account:
+    monitoring:
+      url: https://hooks.slack.com/services/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
+#http.port: 9200
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+#http.cors.allow-origin: /https?:\/\/es.tools.example.com(:[0-9]+)?/
+#http.cors.allow-credentials: true
+http.cors.allow-headers: Cookie,Authorization,Range,DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Length
+

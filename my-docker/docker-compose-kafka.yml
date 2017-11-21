@@ -1,0 +1,38 @@
+version: '2'
+services:
+    zookeeper:
+        build:
+          context: kafka
+          dockerfile: kafka/zk.dockerfile
+        container_name: zookeeper
+        ports:
+          - 2181:2181
+    kafka:
+        build:
+          context: kafka
+          dockerfile: kafka/kafka.dockerfile
+        ports:
+          - 9092:9092
+        environment:
+          - KAFKA_ADVERTISED_HOST_NAME=10.105.242.40
+          - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        links:
+          - zookeeper
+        depends_on:
+          - zookeeper
+
+#  kafka_cluster:
+#    build:
+#      context: .
+#       dockerfile: kafka.dockerfile
+#    environment:
+#      - KAFKA_ADVERTISED_HOST_NAME=10.105.242.40
+#      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#    links:
+#      - zookeeper
+#    depends_on:
+#      - zookeeper

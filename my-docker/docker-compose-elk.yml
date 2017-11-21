@@ -1,0 +1,55 @@
+version: '2'
+services:
+    elasticsearch:
+        build:
+            context: elk
+            dockerfile: elk/elasticsearch.dockerfile
+        container_name: elasticsearch
+        environment:
+            - cluster.name=docker-cluster
+            - bootstrap.memory_lock=true
+            - transport.host=0.0.0.0
+            - discovery.zen.minimum_master_nodes=1
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        volumes:
+            - /data/elasticsearch/node1:/usr/share/elasticsearch/data
+        ports:
+            - 9200:9200
+    elasticsearch_cluster:
+        build:
+            context: elk
+            dockerfile: elk/elasticsearch.dockerfile
+        environment:
+            - cluster.name=docker-cluster
+            - bootstrap.memory_lock=true
+            - discovery.zen.ping.unicast.hosts=elasticsearch
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        volumes:
+            - /data/elasticsearch/node2:/usr/share/elasticsearch/data
+
+    kibana:
+        build:
+            context: elk
+            dockerfile: elk/kibana.dockerfile
+        ports:
+            - 5601:5601
+        depends_on:
+            - elasticsearch
+        links:
+            - elasticsearch:elasticsearch
+
+    logstash:
+        build:
+            context: elk
+            dockerfile: elk/logstash.dockerfile
+
+    es-head:
+        image: mobz/elasticsearch-head:5-alpine
+        ports:
+          - 9100:9100
