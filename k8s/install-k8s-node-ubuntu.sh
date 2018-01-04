@@ -64,7 +64,7 @@ for imageName in ${images[@]} ; do
   docker tag mirrorgooglecontainers/$imageName gcr.io/google_containers/$imageName
 done
 
-docker pull quay.io/coreos/flannel:v0.9.1-amd64
+#docker pull quay.io/coreos/flannel:v0.9.1-amd64
 
 
 #####################################
