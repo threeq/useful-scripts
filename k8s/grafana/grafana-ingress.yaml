@@ -9,7 +9,7 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: grafana.k8s.tools.vchangyi.com
+  - host: grafana.k8s.exmaple.com
     http:
       paths:
       - path: /

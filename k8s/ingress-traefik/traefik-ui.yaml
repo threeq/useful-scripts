@@ -19,7 +19,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: traefik.k8s.tools.vchangyi.com
+  - host: traefik.k8s.exmaple.com
     http:
       paths:
       - path: /
