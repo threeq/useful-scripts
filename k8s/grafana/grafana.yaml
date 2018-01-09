@@ -68,5 +68,7 @@ spec:
   ports:
   - port: 80
     targetPort: 3000
+    protocol: TCP
+    name: web
   selector:
     k8s-app: grafana
