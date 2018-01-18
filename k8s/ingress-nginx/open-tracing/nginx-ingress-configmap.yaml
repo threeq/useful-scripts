@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  enable-opentracing: "true"
+  zipkin-collector-host: zipkin.default.svc.cluster.local
+metadata:
+  name: nginx-configuration
+  namespace: ingress-nginx
+  labels:
+    app: ingress-nginx

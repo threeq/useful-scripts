@@ -5,7 +5,7 @@ fail() {
 	exit
 }
 
-echo "install k8s node on ubuntu"
+echo "install k8s node on centos"
 echo
 echo
 
@@ -15,28 +15,28 @@ join_args=$1
 
 echo "staring install docker"
 
-apt-get remove docker docker-engine docker.io
-apt-get autoremove -y
-apt-get update
-apt-get install -y apt-transport-https ca-certificates curl software-properties-common || fail ""
+yum remove docker \
+          docker-common \
+          docker-selinux \
+          docker-engine
 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-apt-key fingerprint 0EBFCD88
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2 || fail ""
 
-# add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+#yum-config-manager \
+#    --add-repo \
+#    https://download.docker.com/linux/centos/docker-ce.repo
 
-apt-get update
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum makecache fast
 
-echo "install docker version $(apt-cache madison docker-ce | grep 17.03 | head -1 | awk '{print $3}')"
-# apt-get install -y docker-compose docker-ce=$(apt-cache madison docker-ce | grep 17.03 | head -1 | awk '{print $3}')
-apt-get install -y docker-compose docker-ce
-
-docker version || fail "docker install error" 
-
+yum install -y docker-ce docker-compose
 
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://2f19a520.m.daocloud.io
 systemctl restart docker
+
+docker version || fail "docker install error" 
 
 echo "install docker end"
 
@@ -44,13 +44,17 @@ echo "install docker end"
 #####################################
 
 echo "starting install <kubeadm>"
-cat << EOF > /etc/apt/sources.list.d/kubernetes.list
-deb http://mirrors.ustc.edu.cn/kubernetes/apt/ kubernetes-xenial main
+cat << EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
 EOF
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3746C208A7317B0F
 
-apt-get update && apt-get install -y kubeadm socat
+yum install -y kubeadm socat
 
 kubeadm --version || fail "kubeadm install error"
 
@@ -68,7 +72,6 @@ done
 
 #docker pull quay.io/coreos/flannel:v0.9.1-amd64
 
-
 #####################################
 
 swapoff -a
@@ -82,8 +85,8 @@ EOF
 sysctl -p /etc/sysctl.d/k8s.conf
 
 # xxx
-systemctl stop ufw
-systemctl disable ufw
+systemctl stop firewalld
+systemctl disable firewalld
 
 setenforce 0
 mkdir -p /etc/selinux
