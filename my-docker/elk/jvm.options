@@ -1,0 +1,13 @@
+-Xms32766m  
+-Xmx32766m  
+  
+## GC configuration  
+#-XX:+UseConcMarkSweepGC  
+#-XX:CMSInitiatingOccupancyFraction=75  
+#-XX:+UseCMSInitiatingOccupancyOnly  
+  
+## G1GC  
+-XX:+UseG1GC  
+-XX:MaxGCPauseMillis=800  
+-XX:ParallelGCThreads=3 
+-XX:ConcGCThreads=4

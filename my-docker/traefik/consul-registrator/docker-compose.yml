@@ -1,0 +1,7 @@
+version: "3"
+services:
+    consul_registrator:
+        image: gliderlabs/registrator
+        command: -resync=1000 -retry-attempts=-1 -retry-interval=2000 -ip="192.168.20.78" consul://192.168.20.78:8500
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock

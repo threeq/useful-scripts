@@ -1,0 +1,56 @@
+version: '2'
+services:
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: elasticsearch.dockerfile
+    container_name: elasticsearch
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - transport.host=0.0.0.0
+      - discovery.zen.minimum_master_nodes=1
+      - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    #mem_limit: 1g
+    volumes:
+      - /data/elasticsearch/node1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+#  elasticsearch_cluster:
+#    build:
+#      context: .
+#      dockerfile: elasticsearch.dockerfile
+#    environment:
+#      - cluster.name=docker-cluster
+#      - bootstrap.memory_lock=true
+#      - discovery.zen.ping.unicast.hosts=elasticsearch
+#    ulimits:
+#      memlock:
+#        soft: -1
+#        hard: -1
+#    mem_limit: 1g
+#    volumes:
+#      - /data/elasticsearch/node2:/usr/share/elasticsearch/data
+        
+  kibana:
+    build:
+      context: .
+      dockerfile: kibana.dockerfile
+#    environment:
+#      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch:elasticsearch
+
+  logstash:
+    build:
+      context: .
+      dockerfile: logstash.dockerfile
+

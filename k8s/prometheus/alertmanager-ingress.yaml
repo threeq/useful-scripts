@@ -2,16 +2,16 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: grafana
+  name: alertmanager
   namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: grafana.k8s.tools.threeq.com
+  - host: prometheus-alert.k8s.tools.threeq.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: grafana
-          servicePort: 3000
+          serviceName: alertmanager 
+          servicePort: 9093

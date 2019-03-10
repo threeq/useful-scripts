@@ -1,0 +1,17 @@
+version: "3"
+services:
+    web_go:
+        build: go
+        command: go run app.go
+        ports:
+            - 9090
+        environment:
+            - SERVICE_TAGS=traefik.enable=true,traefik.frontend.entryPoints=http,traefik.frontend.rule=Host:go.traefix.example.localhost
+
+    web_python:
+        build: python
+        command: python app.py
+        ports:
+            - 9091:5000
+        environment:
+            - SERVICE_TAGS=traefik.enable=true,traefik.frontend.entryPoints=http,traefik.frontend.rule=Host:python.traefix.example.localhost

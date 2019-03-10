@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: elk-kibana
+  namespace: monitoring
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        task: monitoring
+        k8s-app: elk-kibana
+    spec:
+      containers:
+      - name: elk-kibana
+        image: nexus-storage.tools.threeq.com/community/elk/kibana:6.0.0-build
+        ports:
+        - containerPort: 5601
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    # For use as a Cluster add-on (https://github.com/kubernetes/kubernetes/tree/master/cluster/addons)
+    # If you are NOT using this as an addon, you should comment out this line.
+    kubernetes.io/cluster-service: 'true'
+    kubernetes.io/name: elk-kibana
+  name: elk-kibana
+  namespace: monitoring
+spec:
+  # In a production setup, we recommend accessing Grafana through an external Loadbalancer
+  # or through a public IP.
+  # type: LoadBalancer
+  # You could also use NodePort to expose the service at a randomly-generated port
+  # type: NodePort
+  ports:
+  - port: 80
+    targetPort: 5601
+    protocol: TCP
+    name: web
+  selector:
+    k8s-app: elk-kibana

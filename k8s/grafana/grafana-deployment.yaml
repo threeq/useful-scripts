@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.8.0 (0c0c027)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: grafana
+  name: grafana
+  namespace: monitoring
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: grafana
+    spec:
+      containers:
+      - image: grafana/grafana
+        name: grafana
+        ports:
+        - containerPort: 3000
+        resources: {}
+        env:
+        - name: GF_SERVER_ROOT_URL
+          value: http://grafana.k8s.tools.threeq.com
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: changyi
+        - name: GF_INSTALL_PLUGINS
+          value: grafana-clock-panel,grafana-simple-json-datasource,grafana-piechart-panel,grafana-worldmap-panel
+        - name: GF_SMTP_ENABLED
+          value: true
+        - name: GF_SMTP_HOST
+          value: smtp.exmail.qq.com:465
+        - name: GF_SMTP_USER
+          value: logalarm@threeq.com
+        - name: GF_SMTP_PASSWORD
+          value: La2017Changyi#1116
+        - name: GF_SMTP_FROM_ADDRESS
+          value: logalarm@threeq.com
+      restartPolicy: Always
+
+status: {}

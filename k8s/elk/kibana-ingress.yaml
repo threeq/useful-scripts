@@ -2,16 +2,16 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: grafana
+  name: elk-kibana
   namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: "traefik"
 spec:
   rules:
-  - host: grafana.k8s.tools.threeq.com
+  - host: kibana.k8s.tools.threeq.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: grafana
-          servicePort: 3000
+          serviceName: elk-kibana
+          servicePort: 80

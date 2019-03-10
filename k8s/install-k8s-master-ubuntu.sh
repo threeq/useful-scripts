@@ -122,7 +122,7 @@ echo """
 echo "init 🉑️k8s master"
 
 export KUBE_REPO_PREFIX=mirrorgooglecontainers
-kubeadm init --apiserver-advertise-address=10.105.30.82 --kubernetes-version=v1.9.0 --pod-network-cidr=10.244.0.0/16
+kubeadm init --apiserver-advertise-address=127.0.0.1 --kubernetes-version=v1.9.0 --pod-network-cidr=10.244.0.0/16
 
 
 #####################################

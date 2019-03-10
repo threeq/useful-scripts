@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.8.0 (0c0c027)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: javamelody-collector-server
+  name: javamelody-collector-server
+  namespace: monitoring
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: javamelody-collector-server
+    spec:
+      containers:
+      - image: nexus-storage.tools.threeq.com/community/monitor/javamelody/javamelody-collector-server:v1.70.0-build
+        name: javamelody-collector-server
+        ports:
+        - containerPort: 8080
+        - containerPort: 8089
+        resources: {}
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: nexus-storage.tools.threeq.com.key
+status: {}

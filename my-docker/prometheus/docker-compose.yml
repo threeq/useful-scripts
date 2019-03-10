@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+        prometheus:
+                # build:
+                #         context: .
+                #         dockerfile: prometheus.dockerfile
+                image: nexus-storage.tools.threeq.com/community/monitor/prometheus/prometheus:v2.1.0-build
+                ports:
+                        - 9090:9090
+                depends_on:
+                        - alertmanager
+                links:
+                        - alertmanager
+        alertmanager:
+                image: prom/alertmanager:v0.13.0
+                ports:
+                        - 9093:9093
+        pushgateway:
+                image: prom/pushgateway:v0.4.0
+                ports:
+                        - 9091:9091

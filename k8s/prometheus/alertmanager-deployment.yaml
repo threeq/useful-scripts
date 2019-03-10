@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.8.0 (0c0c027)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: alertmanager
+  name: alertmanager
+  namespace: monitoring
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: alertmanager
+    spec:
+      containers:
+      - image: prom/alertmanager:v0.13.0
+        name: alertmanager
+        ports:
+        - containerPort: 9093
+        resources: {}
+      restartPolicy: Always
+status: {}

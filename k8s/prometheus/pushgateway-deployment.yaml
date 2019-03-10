@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.8.0 (0c0c027)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: pushgateway
+  name: pushgateway
+  namespace: monitoring
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: pushgateway
+    spec:
+      containers:
+      - image: prom/pushgateway:v0.4.0
+        name: pushgateway
+        ports:
+        - containerPort: 9091
+        resources: {}
+      restartPolicy: Always
+status: {}

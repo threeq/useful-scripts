@@ -20,7 +20,7 @@ yum remove docker \
           docker-selinux \
           docker-engine
 
-yum install -y yum-utils \
+yum install -y yum-utils python-pip \
   device-mapper-persistent-data \
   lvm2 || fail ""
 

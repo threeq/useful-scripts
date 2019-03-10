@@ -2,6 +2,6 @@ path.data: /var/lib/logstash
 path.logs: /var/log/logstash
 
 xpack.monitoring.enabled: true
-xpack.monitoring.elasticsearch.url: http://es.example.com:9200
+xpack.monitoring.elasticsearch.url: http://127.0.0.1:9200
 xpack.monitoring.elasticsearch.username: elastic
 xpack.monitoring.elasticsearch.password: changeme 

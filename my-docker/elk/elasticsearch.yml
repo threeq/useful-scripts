@@ -1,3 +1,5 @@
+bootstrap.memory_lock: true  
+bootstrap.system_call_filter: false 
 
 xpack.monitoring.enabled: true
 xpack.notification.slack:
@@ -5,10 +7,43 @@ xpack.notification.slack:
   account:
     monitoring:
       url: https://hooks.slack.com/services/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
+
+xpack.ml.enabled: true
+xpack.watcher.enabled: true
+
 #http.port: 9200
 http.cors.enabled: true
 http.cors.allow-origin: "*"
-#http.cors.allow-origin: /https?:\/\/es.tools.example.com(:[0-9]+)?/
+http.cors.allow_origin: "*"
+#http.cors.allow-origin: /https?:\/\/es.tools.threeq.com(:[0-9]+)?/
 #http.cors.allow-credentials: true
 http.cors.allow-headers: Cookie,Authorization,Range,DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Content-Length
 
+#indices.memory.index_buffer_size: 1024mb
+indices.memory.index_buffer_size: 30%
+indices.store.throttle.type: "none"
+indices.store.throttle.max_bytes_per_sec: 10240mb
+indices.recovery.max_bytes_per_sec: 10000mb
+#indices.cache.query.size: 2%
+#indices.breaker.fielddata.limit: 70%
+indices.breaker.fielddata.limit: 35%
+indices.breaker.request.limit: 20%
+indices.breaker.total.limit: 55%
+#indices.cache.filter.size: 20%
+indices.cache.filter.size: 30%
+indices.fielddata.cache.size: 60% 
+#indices.fielddata.cache.size: 30%
+
+index.refresh_interval: 10s
+index.cache.field.type: soft
+index.merge.scheduler.max_thread_count: 1
+index.number_of_shards: 48
+index.number_of_replicas : 0 
+index.translog.durability : async 
+index.translog.sync_interval : 120s 
+index.translog.flush_threshold_size: 1024mb
+index.translog.flush_threshold_ops: 120m
+
+thread_pool.search.queue_size: 1000
+thread_pool.index.queue_size: 200
+thread_pool.bulk.queue_size: 200
