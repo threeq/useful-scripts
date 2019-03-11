@@ -1,0 +1,12 @@
+version: "3"
+services:
+    traefik:
+        build: .
+        command: -c /dev/null --api --logLevel=DEBUG --consulcatalog.endpoint=192.168.3.26:8500
+        ports:
+            - "80:80"
+            - "8080:8080"
+              #        volumes:
+              #- /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            - SERVICE_TAGS=traefik.enable=false

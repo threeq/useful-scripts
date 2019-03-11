@@ -1,17 +1,8 @@
 version: "3"
 services:
-    traefik:
-        build: .
-        command: -c /dev/null --api --logLevel=DEBUG --consulcatalog.endpoint=192.168.20.78:8500
-        ports:
-            - "80:80"
-            - "8080:8080"
-              #        volumes:
-              #- /var/run/docker.sock:/var/run/docker.sock
-    
     consul:
         image: consul
-        command: consul agent -server -dev -bootstrap -ui -advertise 192.168.20.78 -client=0.0.0.0
+        command: consul agent -server -dev -bootstrap -ui -advertise 192.168.3.26 -client=0.0.0.0
         ports:
             - 8400:8400
             - 8500:8500
