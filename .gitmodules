@@ -1,0 +1,3 @@
+[submodule "git-toolkit"]
+	path = git-toolkit
+	url = git@github.com:threeq/git-toolkit.git
